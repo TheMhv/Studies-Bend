@@ -22,3 +22,17 @@ type Bits
 (Bits.rotr Bits/e) = (Bits/e)
 (Bits.rotr (Bits/o pred)) = (Bits.concat pred (Bits/o (Bits/e)))
 (Bits.rotr (Bits/i pred)) = (Bits.concat pred (Bits/i (Bits/e)))
+
+# Incr
+(Bits.incr Bits/e) = (Bits/i (Bits/e))
+(Bits.incr (Bits/o pred)) = (Bits/i (pred))
+(Bits.incr (Bits/i pred)) = (Bits/o (Bits.incr(pred)))
+
+# Sum
+(Bits.sum Bits/e Bits/e) = (Bits/e)
+(Bits.sum Bits/e y) = (y)
+(Bits.sum x Bits/e) = (x)
+(Bits.sum (Bits/o x.pred) (Bits/o y.pred)) = (Bits/o (Bits.sum x.pred y.pred))
+(Bits.sum (Bits/i x.pred) (Bits/o y.pred)) = (Bits/i (Bits.sum x.pred y.pred))
+(Bits.sum (Bits/o x.pred) (Bits/i y.pred)) = (Bits/i (Bits.sum x.pred y.pred))
+(Bits.sum (Bits/i x.pred) (Bits/i y.pred)) = (Bits/o (Bits.incr (Bits.sum x.pred y.pred)))
