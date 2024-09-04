@@ -8,10 +8,31 @@ type Bits
 (Bits.show (Bits/o pred)) = (String/Cons '0' (Bits.show(pred)))
 (Bits.show (Bits/i pred)) = (String/Cons '1' (Bits.show(pred)))
 
-# Bitwise Not
+# Bitwise NOT
 (Bits.not Bits/e) = (Bits/e)
 (Bits.not (Bits/o pred)) = (Bits/i (Bits.not(pred)))
 (Bits.not (Bits/i pred)) = (Bits/o (Bits.not(pred)))
+
+# Bitwise AND
+(Bits.and (Bits/o x.pred) (Bits/o y.pred)) = (Bits/o (Bits.and x.pred y.pred))
+(Bits.and (Bits/i x.pred) (Bits/o y.pred)) = (Bits/o (Bits.and x.pred y.pred))
+(Bits.and (Bits/o x.pred) (Bits/i y.pred)) = (Bits/o (Bits.and x.pred y.pred))
+(Bits.and (Bits/i x.pred) (Bits/i y.pred)) = (Bits/i (Bits.and x.pred y.pred))
+(Bits.and * *) = (Bits/e)
+
+# Bitwise OR
+(Bits.or (Bits/o x.pred) (Bits/o y.pred)) = (Bits/o (Bits.or x.pred y.pred))
+(Bits.or (Bits/i x.pred) (Bits/o y.pred)) = (Bits/i (Bits.or x.pred y.pred))
+(Bits.or (Bits/o x.pred) (Bits/i y.pred)) = (Bits/i (Bits.or x.pred y.pred))
+(Bits.or (Bits/i x.pred) (Bits/i y.pred)) = (Bits/i (Bits.or x.pred y.pred))
+(Bits.or * *) = (Bits/e)
+
+# Bitwise XOR
+(Bits.xor (Bits/o x.pred) (Bits/o y.pred)) = (Bits/o (Bits.xor x.pred y.pred))
+(Bits.xor (Bits/i x.pred) (Bits/o y.pred)) = (Bits/i (Bits.xor x.pred y.pred))
+(Bits.xor (Bits/o x.pred) (Bits/i y.pred)) = (Bits/i (Bits.xor x.pred y.pred))
+(Bits.xor (Bits/i x.pred) (Bits/i y.pred)) = (Bits/o (Bits.xor x.pred y.pred))
+(Bits.xor * *) = (Bits/e)
 
 # Concat
 (Bits.concat Bits/e y) = (y)
